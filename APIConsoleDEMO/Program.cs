@@ -1,4 +1,4 @@
-﻿using APIClient;
+﻿using PluginAPI;
 
 
 Console.WriteLine(await Client.client.GetAsync("users.json"));

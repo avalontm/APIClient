@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\APIClient\APIClient.csproj" />
+    <ProjectReference Include="..\APIClient\PluginAPI.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>PluginAPI</Title>
+    <Copyright>AvalonTM</Copyright>
+    <PackageProjectUrl>https://github.com/avalontm/APIClient</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/avalontm/APIClient</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>API, Xamarin, Maui, Windows, Android, iOS, MACOS</PackageTags>
+    <Description>simple plugin for api client crossplatform</Description>
+    <PackageIcon>api_cion.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\AvalonTM\Desktop\api_cion.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+</Project>

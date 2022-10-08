@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIClient", "APIClient\APIClient.csproj", "{574354AC-D057-4889-AF40-5703F27F3C85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PluginAPI", "APIClient\PluginAPI.csproj", "{574354AC-D057-4889-AF40-5703F27F3C85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIConsoleDEMO", "APIConsoleDEMO\APIConsoleDEMO.csproj", "{BADB6BC0-C066-43D5-AF9A-704E72AA9444}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIConsoleDEMO", "APIConsoleDEMO\APIConsoleDEMO.csproj", "{BADB6BC0-C066-43D5-AF9A-704E72AA9444}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

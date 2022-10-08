@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace APIClient
+namespace PluginAPI
 {
     public class WebClientManager
     {
