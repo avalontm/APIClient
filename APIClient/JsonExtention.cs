@@ -43,7 +43,6 @@ namespace PluginAPI
                 if (o.TryGetValue(name, StringComparison.OrdinalIgnoreCase, out var token))
                 {
                     var value = token.ToObject<T>();
-                    Console.WriteLine(value);
                     return value;
                 }
                 else
