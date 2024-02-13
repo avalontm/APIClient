@@ -20,10 +20,12 @@ namespace PluginAPI
             return JsonConvert.SerializeObject(obj);
         }
 
-        public static T GetValue<T>(this string json, string name)
+        public static T GetValue<T>(this object obj, string name)
         {
             try
             {
+                string json = obj?.ToString();
+
                 if (string.IsNullOrEmpty(json))
                 {
                     // Handle null or empty JSON string

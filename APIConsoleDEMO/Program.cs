@@ -21,7 +21,7 @@ namespace APIConsoleDEMO
         {
             ApiManager.Int();
 
-            string rotacion = await ApiManager.GetFreeRotation();
+            object rotacion = await ApiManager.GetFreeRotation();
 
             int[] champions_ids = rotacion.GetValue<int[]>("freeChampionIds");
 
