@@ -175,6 +175,13 @@ namespace PluginAPI
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         }
 
+        public void CreateKey(string key, string value)
+        {
+            EnsureHttpClientCreated();
+
+            _httpClient.DefaultRequestHeaders.Add(key, value);
+        }
+
         void EnsureHttpClientCreated()
         {
             if (_httpClient == null)

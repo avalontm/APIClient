@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -11,11 +11,14 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>API, Xamarin, Maui, Windows, Android, iOS, MACOS</PackageTags>
     <Description>simple plugin for api client crossplatform</Description>
-    <PackageIcon>api_cion.png</PackageIcon>
+    <PackageIcon>icon.png</PackageIcon>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+    <FileVersion>1.0.0.2</FileVersion>
+	<PackageVersion>1.0.2</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="C:\Users\AvalonTM\Desktop\api_cion.png">
+    <None Include="icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

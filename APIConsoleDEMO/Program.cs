@@ -1,11 +1,34 @@
 ﻿using PluginAPI;
 
-
-Console.WriteLine(await Client.client.GetAsync("users.json"));
-Console.Read();
-
-public static class Client
+namespace APIConsoleDEMO
 {
-    static WebClientManager _client;
-    public static WebClientManager client => _client ?? (_client = new WebClientManager(string.Format("{0}/api", "https://raw.githubusercontent.com/avalontm/APIClient/master")));
+    internal class Program
+    {
+        static bool running = true;
+        static string summoner_name = "konejita";
+
+        static void Main(string[] args)
+        {
+            onLoop();
+
+            while (running)
+            {
+
+            }
+        }
+
+        static async void onLoop()
+        {
+            ApiManager.Int();
+
+            string rotacion = await ApiManager.GetFreeRotation();
+
+            int[] champions_ids = rotacion.GetValue<int[]>("freeChampionIds");
+
+            for (int i = 0; i < champions_ids.Length; i++)
+            {
+                Console.WriteLine($"champion_id: {champions_ids[i]}");
+            }
+        }
+    }
 }
