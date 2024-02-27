@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace PluginAPI
             return JsonConvert.SerializeObject(obj);
         }
 
-        public static T GetValue<T>(this object obj, string name)
+        public static T? GetValue<T>(this object obj, string name, object value = null)
         {
             try
             {
@@ -29,7 +30,7 @@ namespace PluginAPI
                 if (string.IsNullOrEmpty(json))
                 {
                     // Handle null or empty JSON string
-                    Console.WriteLine("JSON string is null or empty.");
+                    Debug.WriteLine("JSON string is null or empty.");
                     return default(T);
                 }
 
@@ -38,27 +39,31 @@ namespace PluginAPI
                 if (o == null)
                 {
                     // Handle case where JSON couldn't be deserialized
-                    Console.WriteLine("Failed to deserialize JSON.");
+                    Debug.WriteLine("Failed to deserialize JSON.");
                     return default(T);
                 }
 
                 if (o.TryGetValue(name, StringComparison.OrdinalIgnoreCase, out var token))
                 {
-                    var value = token.ToObject<T>();
-                    return value;
+                    return token.ToObject<T>();
                 }
                 else
                 {
-                    // Handle case where the specified key doesn't exist
-                    Console.WriteLine($"Key '{name}' not found in JSON.");
+                    Debug.WriteLine($"Key '{name}' not found in JSON.");
+
+                    if(value !=  null)
+                    {
+                        return (T)Convert.ChangeType(value, value.GetType());
+                    }
                     return default(T);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Debug.WriteLine(ex);
                 return default(T);
             }
         }
+
     }
 }

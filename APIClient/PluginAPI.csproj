@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <Title>PluginAPI</Title>
     <Copyright>AvalonTM</Copyright>
+	<Authors>AvalonTM</Authors>
     <PackageProjectUrl>https://github.com/avalontm/APIClient</PackageProjectUrl>
     <RepositoryUrl>https://github.com/avalontm/APIClient</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

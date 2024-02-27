@@ -34,7 +34,10 @@ namespace PluginAPI
 
             using (var response = await _httpClient.PostAsync(url, input))
             {
-                response.EnsureSuccessStatusCode();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    response.EnsureSuccessStatusCode();
+                }
                 return await response.Content.ReadAsStringAsync();
             }
         }
@@ -46,7 +49,8 @@ namespace PluginAPI
             return JsonConvert.DeserializeObject<TResult>(strResponse, new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                Error = new EventHandler<Newtonsoft.Json.Serialization.ErrorEventArgs>(onError)
+                Error = new EventHandler<Newtonsoft.Json.Serialization.ErrorEventArgs>(onError), 
+                Formatting = Formatting.Indented
             });
         }
 
@@ -57,7 +61,8 @@ namespace PluginAPI
             return JsonConvert.DeserializeObject<TResult>(strResponse, new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                Error = new EventHandler<Newtonsoft.Json.Serialization.ErrorEventArgs>(onError)
+                Error = new EventHandler<Newtonsoft.Json.Serialization.ErrorEventArgs>(onError),
+                Formatting = Formatting.Indented
             });
         }
 
@@ -68,7 +73,8 @@ namespace PluginAPI
             return JsonConvert.DeserializeObject<TResult>(strResponse, new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                Error = new EventHandler<Newtonsoft.Json.Serialization.ErrorEventArgs>(onError)
+                Error = new EventHandler<Newtonsoft.Json.Serialization.ErrorEventArgs>(onError),
+                Formatting = Formatting.Indented
             });
         }
 
@@ -78,7 +84,10 @@ namespace PluginAPI
 
             using (var response = await _httpClient.GetAsync(url))
             {
-                response.EnsureSuccessStatusCode();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    response.EnsureSuccessStatusCode();
+                }
                 return await response.Content.ReadAsStringAsync();
             }
         }
@@ -89,7 +98,10 @@ namespace PluginAPI
 
             using (var response = await _httpClient.PatchAsync(url, content))
             {
-                response.EnsureSuccessStatusCode();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    response.EnsureSuccessStatusCode();
+                }
                 return await response.Content.ReadAsStringAsync();
             }
         }
@@ -100,7 +112,10 @@ namespace PluginAPI
 
             using (var response = await _httpClient.PutAsync(url, content))
             {
-                response.EnsureSuccessStatusCode();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    response.EnsureSuccessStatusCode();
+                }
                 return await response.Content.ReadAsStringAsync();
             }
         }
@@ -112,7 +127,8 @@ namespace PluginAPI
             return JsonConvert.DeserializeObject<TResult>(strResponse, new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                Error = new EventHandler<Newtonsoft.Json.Serialization.ErrorEventArgs>(onError)
+                Error = new EventHandler<Newtonsoft.Json.Serialization.ErrorEventArgs>(onError),
+                Formatting = Formatting.Indented
             });
         }
 
@@ -128,7 +144,8 @@ namespace PluginAPI
                 return JsonConvert.DeserializeObject<TResult>(strResponse, new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                    Error = new EventHandler<Newtonsoft.Json.Serialization.ErrorEventArgs>(onError)
+                    Error = new EventHandler<Newtonsoft.Json.Serialization.ErrorEventArgs>(onError),
+                    Formatting = Formatting.Indented
                 });
             }
         }
@@ -188,19 +205,6 @@ namespace PluginAPI
             {
                 CreateHttpClient();
             }
-        }
-
-        static string ConvertToJsonString(object obj)
-        {
-            if (obj == null)
-            {
-                return string.Empty;
-            }
-
-            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            });
         }
 
         static string NormalizeBaseUrl(string url)
