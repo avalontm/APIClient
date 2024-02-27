@@ -16,9 +16,14 @@ namespace PluginAPI
             client = new WebClientManager(host);
         }
 
-        public static void SetApiKey(string key,  string value)
+        public static void CreateKey(string key,  string value)
         {
             client.CreateKey(key, value);
+        }
+
+        public static void CreateToken(string accessToken)
+        {
+            client.CreateToken(accessToken);
         }
 
         public static async Task<string> Get(string path, params string[] args)
