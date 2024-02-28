@@ -11,16 +11,45 @@ namespace PluginAPI
 {
     public static class JsonExtention
     {
-        public static T ToConvert<T>(this object obj)
+        /// <summary>
+        /// Convertir formato JSON a un objeto
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static T? ToConvert<T>(this object obj)
         {
+            if(obj == null)
+            {
+                return default(T);
+            }
             return JsonConvert.DeserializeObject<T>(obj.ToString());
         }
 
+        
+        /// <summary>
+        /// Convertir un objecto a formato JSON
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public static string FromConvert(this object obj)
         {
+            if (obj == null)
+            {
+                return string.Empty;
+            }
             return JsonConvert.SerializeObject(obj);
         }
 
+
+        /// <summary>
+        /// Obtener un valor en una KEY en formato JSON
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static T? GetValue<T>(this object obj, string name, object value = null)
         {
             try

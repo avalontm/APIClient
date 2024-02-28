@@ -78,6 +78,7 @@ namespace PluginAPI
             });
         }
 
+
         public async Task<string> GetAsync(string url)
         {
             EnsureHttpClientCreated();
@@ -111,6 +112,20 @@ namespace PluginAPI
             EnsureHttpClientCreated();
 
             using (var response = await _httpClient.PutAsync(url, content))
+            {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    response.EnsureSuccessStatusCode();
+                }
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
+
+        public async Task<string> DeleteAsync(string url)
+        {
+            EnsureHttpClientCreated();
+
+            using (var response = await _httpClient.DeleteAsync(url))
             {
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
@@ -197,6 +212,13 @@ namespace PluginAPI
             EnsureHttpClientCreated();
 
             _httpClient.DefaultRequestHeaders.Add(key, value);
+        }
+
+        public void ClearKeys()
+        {
+            EnsureHttpClientCreated();
+
+            _httpClient.DefaultRequestHeaders.Clear();
         }
 
         void EnsureHttpClientCreated()
