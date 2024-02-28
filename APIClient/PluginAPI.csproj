@@ -13,9 +13,9 @@
     <PackageTags>API, Xamarin, Maui, Windows, Android, iOS, MACOS</PackageTags>
     <Description>simple plugin for api client crossplatform</Description>
     <PackageIcon>icon.png</PackageIcon>
-    <AssemblyVersion>1.0.0.5</AssemblyVersion>
-    <FileVersion>1.0.0.5</FileVersion>
-	<PackageVersion>1.0.5</PackageVersion>
+    <AssemblyVersion>1.0.0.6</AssemblyVersion>
+    <FileVersion>1.0.0.6</FileVersion>
+	<PackageVersion>1.0.6</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
