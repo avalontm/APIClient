@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -77,6 +78,21 @@ namespace PluginAPI
             await Task.Delay(1000);
         }
 
+        /// <summary>
+        /// debe ser una lista
+        /// </summary>
+        /// <param name="model"></param>
+        public static void CreateTable(object model)
+        {
+            if(model == null)
+            {
+                return;
+            }
+
+            string json = JsonConvert.SerializeObject(model);
+            List<JObject> datos = JsonConvert.DeserializeObject<List<JObject>>(json);
+            CreateTable(datos);
+        }
 
         public static void CreateTable(List<JObject> datos)
         {
@@ -115,16 +131,39 @@ namespace PluginAPI
 
             for (int i = 0; i < headers.Count; i++)
             {
+                // Initialize maximum width for current column
+                int maxWidth = headers[i].Length + 4; // Consider header length and minimum separation
+
+                // Loop through each item in the first row (assuming consistent data length)
                 for (int j = 0; j < items[0].Count; j++)
                 {
-                    columnWidths[i] = Math.Max(columnWidths[i], items[0][i].ToString().Length);
+                    // Check if current item length exceeds current maximum width
+                    if (items[0][i].ToString().Length > maxWidth)
+                    {
+                        // Update maximum width if necessary
+                        maxWidth = items[0][i].ToString().Length + 4;
+                    }
                 }
+
+                // Update column width with the calculated maximum width
+                columnWidths[i] = maxWidth;
             }
 
-            // Titulos con separadores y relleno
             for (int i = 0; i < headers.Count; i++)
             {
-                Console.Write(headers[i].PadRight(columnWidths[i] + 2));
+                // Calculate minimum padding length for guaranteed separation
+                int minPadding = 2; // Ensure at least 2 spaces on each side (4 spaces total)
+
+                // Calculate padding length for centered text
+                int paddingLength = ((columnWidths[i] - headers[i].Length) / 2) + 1;
+
+                // Choose the larger padding length for centering and separation
+                paddingLength = Math.Max(paddingLength, minPadding);
+
+                // Use string formatting for flexible centering
+                string centeredHeader = headers[i].PadLeft(paddingLength).PadRight(columnWidths[i]);
+
+                Console.Write(centeredHeader);
             }
 
             Console.WriteLine();
@@ -132,7 +171,7 @@ namespace PluginAPI
             // Línea de separación
             for (int i = 0; i < headers.Count; i++)
             {
-                Console.Write(new string('-', columnWidths[i] + 2));
+                Console.Write(new string('-', columnWidths[i]));
             }
 
             Console.WriteLine();
