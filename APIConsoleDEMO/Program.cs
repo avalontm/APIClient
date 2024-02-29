@@ -12,129 +12,20 @@ namespace APIConsoleDEMO
         {
             ApiManager.Create("https://curso-dev-bmem.1.us-1.fl0.io");
 
-            onMenu();
+            List<ConsoleMenuItem> opciones = new List<ConsoleMenuItem>();
+            opciones.Add(new ConsoleMenuItem() { Title = "Login", Action = onLogin });
+            opciones.Add(new ConsoleMenuItem() { Title = "Buscar Curso", Action = onFindCurso });
+            opciones.Add(new ConsoleMenuItem() { Title = "Ver Cursos", Action = onSeeCursos });
+            opciones.Add(new ConsoleMenuItem() { Title = "Completar Curso", Action = onCompletCurso });
+            opciones.Add(new ConsoleMenuItem() { Title = "Salir", Action = onExit });
+            
+            ConsoleEx.Menu("Mini Curso", opciones);
 
             while (running)
             {
                
             }
         }
-
-        static async Task onMenu()
-        {
-            //titulo
-            string titulo = "Mini Curso";
-
-            // Opciones del menú
-            string[] opciones = { "login", "buscar curso", "ver cursos", "completar curso", "Salir" };
-
-            // Posición actual del cursor
-            int cursorPos = 0;
-            // Posición actual de la barra
-            int barraPos = 0;
-
-            // Mostrar el menú con marco
-            const char EsquinaSuperiorIzquierda = '╔';
-            const char EsquinaSuperiorDerecha = '╗';
-            const char EsquinaInferiorIzquierda = '╚';
-            const char EsquinaInferiorDerecha = '╝';
-            const char LineaHorizontal = '═';
-            const char LineaVertical = '║';
-
-            int anchoConsola = Console.WindowWidth;
-            int anchoMarco = anchoConsola - 10; 
-
-            while (running)
-            {
-                // Limpiar la pantalla
-                Console.Clear();
-
-                // Calcular la posición central del título
-                int anchoTitulo = titulo.Length;
-                int centroTitulo = (anchoConsola - anchoTitulo) / 2;
-
-                // Imprimir el título antes del marco
-                Console.SetCursorPosition(centroTitulo, Console.CursorTop);
-
-                Console.WriteLine(titulo);
-
-                // Imprimir el marco con separación
-                Console.Write("    ");
-                Console.Write(EsquinaSuperiorIzquierda);
-                Console.Write(new string(LineaHorizontal, anchoMarco));
-                Console.WriteLine(EsquinaSuperiorDerecha);
-
-                // Mostrar el menú
-                for (int i = 0; i < opciones.Length; i++)
-                {
-                    Console.Write("    ");
-
-                    Console.Write(LineaVertical);
-                    Console.BackgroundColor = (i == cursorPos) ? ConsoleColor.White : ConsoleColor.Black;
-                    Console.ForegroundColor = (i == cursorPos) ? ConsoleColor.Black : ConsoleColor.White;
-                    Console.Write("  {0,-" + (anchoMarco - 6) + "}    ", i + 1 + ". " + opciones[i]);
-                    Console.ResetColor();
-                    Console.Write(LineaVertical);
-                    Console.WriteLine();
-
-                    // Mostrar la barra solo en la opción actual
-                    if (i == barraPos)
-                    {
-                        Console.SetCursorPosition(1, Console.CursorTop - 1);
-                        Console.SetCursorPosition(Console.CursorLeft + (anchoMarco - 2), Console.CursorTop);
-                        Console.WriteLine();
-                        Console.ResetColor();
-                    }
-                }
-
-                Console.Write("    ");
-                Console.Write(EsquinaInferiorIzquierda);
-                Console.Write(new string(LineaHorizontal, anchoMarco));
-                Console.WriteLine(EsquinaInferiorDerecha);
-
-                // Leer la tecla pulsada
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-
-                // Navegar por el menú
-                switch (keyInfo.Key)
-                {
-                    case ConsoleKey.UpArrow:
-                        cursorPos = (cursorPos - 1 + opciones.Length) % opciones.Length;
-                        barraPos = cursorPos;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        cursorPos = (cursorPos + 1) % opciones.Length;
-                        barraPos = cursorPos;
-                        break;
-                    case ConsoleKey.Enter:
-                        // Seleccionar la opción actual
-                        int opcionSeleccionada = cursorPos + 1;
-
-                        // Agregar lógica específica para cada opción
-                        switch (opcionSeleccionada)
-                        {
-                            case 1:
-                                await onLogin();
-                                break;
-                            case 2:
-                                await onFindCurso();
-                                break;
-                            case 3:
-                                await onSeeCurso();
-                                break;
-                            case 4:
-                                await onCompletCurso();
-                                break;
-                            case 5:
-                                running = false;
-                                break;
-                        }
-
-                        break;
-                }
-            }
-        }
-
 
         static async Task onLogin()
         {
@@ -193,7 +84,7 @@ namespace APIConsoleDEMO
             Continue();
         }
 
-        private static async Task onSeeCurso()
+        private static async Task onSeeCursos()
         {
             await ConsoleEx.WaitStart("obteniendo mis cursos");
             string result = await ApiManager.Get("/api/cursos");
@@ -206,7 +97,6 @@ namespace APIConsoleDEMO
             //esperamos que se precione cualquier tecla.
             Continue();
         }
-
 
         static async Task onCompletCurso()
         {
@@ -235,6 +125,12 @@ namespace APIConsoleDEMO
 
             //esperamos que se precione cualquier tecla.
             Continue();
+        }
+
+        static async Task onExit()
+        {
+            running = false;
+            Environment.Exit(0);
         }
 
         static void Continue()

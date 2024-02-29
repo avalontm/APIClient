@@ -207,5 +207,102 @@ namespace PluginAPI
             items.Clear();
             Console.WriteLine();
         }
+
+
+        /* MENU */
+        public static async Task Menu(string titulo, List<ConsoleMenuItem> opciones)
+        {
+            // Posición actual del cursor
+            int cursorPos = 0;
+            // Posición actual de la barra
+            int barraPos = 0;
+
+            // Mostrar el menú con marco
+            const char EsquinaSuperiorIzquierda = '╔';
+            const char EsquinaSuperiorDerecha = '╗';
+            const char EsquinaInferiorIzquierda = '╚';
+            const char EsquinaInferiorDerecha = '╝';
+            const char LineaHorizontal = '═';
+            const char LineaVertical = '║';
+
+            int anchoConsola = Console.WindowWidth;
+            int anchoMarco = anchoConsola - 10;
+
+            while (true)
+            {
+                // Limpiar la pantalla
+                Console.Clear();
+
+                // Calcular la posición central del título
+                int anchoTitulo = titulo.Length;
+                int centroTitulo = (anchoConsola - anchoTitulo) / 2;
+
+                // Imprimir el título antes del marco
+                Console.SetCursorPosition(centroTitulo, Console.CursorTop);
+
+                Console.WriteLine(titulo);
+
+                // Imprimir el marco con separación
+                Console.Write("    ");
+                Console.Write(EsquinaSuperiorIzquierda);
+                Console.Write(new string(LineaHorizontal, anchoMarco));
+                Console.WriteLine(EsquinaSuperiorDerecha);
+
+                // Mostrar el menú
+                for (int i = 0; i < opciones.Count; i++)
+                {
+                    Console.Write("    ");
+
+                    Console.Write(LineaVertical);
+                    Console.BackgroundColor = (i == cursorPos) ? ConsoleColor.White : ConsoleColor.Black;
+                    Console.ForegroundColor = (i == cursorPos) ? ConsoleColor.Black : ConsoleColor.White;
+                    Console.Write("  {0,-" + (anchoMarco - 6) + "}    ", i + 1 + ". " + opciones[i].Title);
+                    Console.ResetColor();
+                    Console.Write(LineaVertical);
+                    Console.WriteLine();
+
+                    // Mostrar la barra solo en la opción actual
+                    if (i == barraPos)
+                    {
+                        Console.SetCursorPosition(1, Console.CursorTop - 1);
+                        Console.SetCursorPosition(Console.CursorLeft + (anchoMarco - 2), Console.CursorTop);
+                        Console.WriteLine();
+                        Console.ResetColor();
+                    }
+                }
+
+                Console.Write("    ");
+                Console.Write(EsquinaInferiorIzquierda);
+                Console.Write(new string(LineaHorizontal, anchoMarco));
+                Console.WriteLine(EsquinaInferiorDerecha);
+
+                // Leer la tecla pulsada
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+                // Navegar por el menú
+                switch (keyInfo.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        cursorPos = (cursorPos - 1 + opciones.Count) % opciones.Count;
+                        barraPos = cursorPos;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        cursorPos = (cursorPos + 1) % opciones.Count;
+                        barraPos = cursorPos;
+                        break;
+                    case ConsoleKey.Enter:
+                        // Seleccionar la opción actual
+                        int opcionSeleccionada = cursorPos;
+
+                        // Llamamos la accion del menu
+                        if (opcionSeleccionada < opciones.Count)
+                        {
+                            await opciones[opcionSeleccionada].Action?.Invoke();
+                        }
+
+                        break;
+                }
+            }
+        }
     }
 }
