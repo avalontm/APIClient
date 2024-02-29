@@ -17,6 +17,11 @@ namespace PluginAPI
         static bool isWait { get; set; } = false;
         static ConsoleSpinner spinner;
 
+
+        /// <summary>
+        /// Oculta lo que se escriba en consola
+        /// </summary>
+        /// <returns></returns>
         public static string ReadPassword()
         {
             // Leer la contraseña sin mostrarla en la consola
@@ -50,6 +55,10 @@ namespace PluginAPI
         }
 
 
+        /// <summary>
+        /// Terminamos al animacion de esperar
+        /// </summary>
+        /// <returns></returns>
         public static async Task WaitEnd()
         {
             if (spinner != null)
@@ -60,6 +69,12 @@ namespace PluginAPI
             await Task.Delay(100);
         }
 
+        /// <summary>
+        /// Animacion de esperar
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="sequence"></param>
+        /// <returns></returns>
         public static async Task WaitStart(string message = "Espere", int sequence = 5)
         {
             Task.Run(() =>
@@ -94,6 +109,10 @@ namespace PluginAPI
             CreateTable(datos);
         }
 
+        /// <summary>
+        /// Crea una tabla en base al modelo d lista
+        /// </summary>
+        /// <param name="datos"></param>
         public static void CreateTable(List<JObject> datos)
         {
             if (datos == null || datos.Count == 0)
@@ -209,7 +228,12 @@ namespace PluginAPI
         }
 
 
-        /* MENU */
+        /// <summary>
+        /// Establece un menu en consola
+        /// </summary>
+        /// <param name="titulo"></param>
+        /// <param name="opciones"></param>
+        /// <returns></returns>
         public static async Task Menu(string titulo, List<ConsoleMenuItem> opciones)
         {
             // Posición actual del cursor
